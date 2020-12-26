@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: rgba(245, 245, 245, 0.562);
+    font-family: "Poppins", sans-serif;
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+}
+
+input {
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+}
+
+button {
+    appearance: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-family: "Poppins", sans-serif;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
