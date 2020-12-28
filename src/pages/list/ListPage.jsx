@@ -1,59 +1,159 @@
-import axios from "axios";
 import React, {useState, useEffect, useReducer} from "react";
 import {CardComponent} from "../../components/CardComponent/CardComponent";
 import {LoaderComponent} from "../../components/LoaderComponent/LoaderComponent";
+import {MainRouterComponent} from "../../components/MainRouterComponent/MainRouterComponent";
+import {PaginationComponent} from "../../components/PaginationComponent/PaginationComponent";
 import {SearcherComponent} from "../../components/SearcherComponent/SearcherComponent";
 import {PokeApiRequests} from "../../helpers/PokeApiRequests.helper";
+import {pokemonDetailReducer} from "../../reducers/pokemonDetailReducer";
 import {pokemonListReducer} from "../../reducers/pokemonListReducer";
+
 import "./ListPage.scss";
 
 export const ListPage = () => {
-  const {getAllPokemons} = PokeApiRequests();
-  const [pokemonListState, dispatch] = useReducer(pokemonListReducer, []);
-
+  const {
+    getAllPokemons,
+    getPokemonByName,
+    getPokemonByNumber,
+  } = PokeApiRequests();
+  const [paginationState, setPaginationState] = useState({
+    offset: 0,
+    limit: 12,
+    page: 1,
+  });
+  const {offset, limit, page} = paginationState;
+  const [loadingState, setLoadingState] = useState(false);
+  const [pokemonListState, dispatchList] = useReducer(pokemonListReducer, []);
+  const [pokemonDetailState, dispatchDetail] = useReducer(
+    pokemonDetailReducer,
+    []
+  );
   useEffect(() => {
-    getAllPokemons().then(({status, data}) => {
-      if (status === 200) {
-        const action = {
-          type: "UPDATE_POKEMON_MAIN_LIST",
-          payload: data.results,
-        };
-        console.log(pokemonListState);
+    setLoadingState(true);
+    getAllPokemons(offset, limit).then((r) => {
+      console.log(r);
 
-        setTimeout(() => {
-          dispatch(action);
-        }, 3000);
+      if (r.status === 200) {
+        const action = {
+          type: "GET_ALL_POKEMONS",
+          payload: r.data.results,
+        };
+
+        dispatchList(action);
+        getPokemonDetail(r.data.results);
       }
     });
   }, []);
 
-  const handleSearch = (event) => {
-    axios
-      .get(`https://pokeapi.co/api/v2/pokemon/${event.target.value}`)
-      .then((r) => {
-        console.log(r);
+  const getPokemonList = () => {};
+
+  const getPokemonDetail = (data) => {
+    data.forEach((p) => {
+      getPokemonByName(p.name).then((r) => {
         if (r.status === 200) {
+          const action = {
+            type: "UPDATE_POKEMON_DETAIL",
+            payload: r.data,
+          };
+          dispatchDetail(action);
+          setTimeout(() => {
+            setLoadingState(false);
+          }, 500);
         }
-      })
-      .catch((e) => console.log(e));
+      });
+    });
+  };
+
+  const searchByName = (name) => {
+    setLoadingState(true);
+    getPokemonByName(name).then(({status, data}) => {
+      console.log(data);
+      if (status === 200) {
+        const action = {
+          type: "GET_NAME_POKEMON_DETAIL",
+          payload: data,
+        };
+
+        dispatchDetail(action);
+        setTimeout(() => {
+          setLoadingState(false);
+        }, 500);
+      }
+    });
+  };
+
+  const searchByNumber = (number) => {
+    setLoadingState(true);
+    getPokemonByNumber(number).then(({status, data}) => {
+      if (status === 200) {
+        const action = {
+          type: "GET_NUMBER_POKEMON_DETAIL",
+          payload: data,
+        };
+        dispatchDetail(action);
+
+        setTimeout(() => {
+          setLoadingState(false);
+        }, 500);
+      }
+    });
+  };
+
+  const clearList = () => {
+    setLoadingState(true);
+    const action = {
+      type: "CLEAR_POKEMON_DETAIL",
+      payload: [],
+    };
+    dispatchDetail(action);
+    getAllPokemons().then(({status, data}) => {
+      if (status === 200) {
+        const action = {
+          type: "GET_ALL_POKEMONS",
+          payload: data.results,
+        };
+
+        dispatchList(action);
+        getPokemonDetail(data.results);
+      }
+    });
   };
 
   return (
     <div className="content">
+      <div className="content-navbar">
+        <MainRouterComponent></MainRouterComponent>
+      </div>
+
       <div className="content-main">
-        <div className="content-main-searcher">
-          <SearcherComponent></SearcherComponent>
+        <div className="content-main-title">
+          <h1>PokeDex</h1>
         </div>
-        {pokemonListState.length > 0 ? (
+        <div className="content-main-searcher">
+          <SearcherComponent
+            searchByName={searchByName}
+            searchByNumber={searchByNumber}
+            clearList={clearList}
+          ></SearcherComponent>
+        </div>
+        {loadingState ? (
+          <LoaderComponent></LoaderComponent>
+        ) : (
           <div className="content-main-results">
-            {pokemonListState.map((e) => {
-              return <CardComponent pokemon={e} key={e.name}></CardComponent>;
+            {pokemonDetailState.map((e) => {
+              return <CardComponent pokemon={e} key={e.id}></CardComponent>;
             })}
           </div>
-        ) : (
-          <LoaderComponent></LoaderComponent>
         )}
-        <div className="content-main-pagination"></div>
+
+        <div className="content-main-pagination">
+          {!loadingState && (
+            <PaginationComponent
+              paginationState={paginationState}
+              setPaginationState={setPaginationState}
+            ></PaginationComponent>
+          )}
+        </div>
       </div>
     </div>
   );

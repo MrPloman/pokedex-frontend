@@ -1,33 +1,10 @@
-import axios from "axios";
-import {useEffect, useState, useReducer} from "react";
-import {PokeApiRequests} from "../../helpers/PokeApiRequests.helper";
-import {pokemonDetailReducer} from "../../reducers/pokemonDetailReducer";
+import {useState} from "react";
+
 import "./CardComponent.scss";
 
-export const CardComponent = ({pokemon}) => {
-  const [currentPokemon, setPokemon] = useState();
-  const [, dispatch] = useReducer(pokemonDetailReducer, {});
-  const {getPokemonByName} = PokeApiRequests();
-  useEffect(() => {
-    if (pokemon) {
-      getPokemonByName(pokemon.name)
-        .then((r) => {
-          if (r.status === 200) {
-            setPokemon(r.data);
-          }
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-  }, [pokemon]);
-  const selectPokemon = () => {
-    const action = {
-      type: "UPDATE_POKEMON_DETAIL",
-      payload: currentPokemon,
-    };
-    dispatch(action);
-  };
+export const CardComponent = (props) => {
+  const [currentPokemon, setPokemon] = useState(props.pokemon);
+  const selectPokemon = () => {};
 
   return currentPokemon ? (
     <div

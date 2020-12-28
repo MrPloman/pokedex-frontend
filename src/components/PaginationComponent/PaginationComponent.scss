@@ -1,0 +1,12 @@
+.pagination {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+    justify-content: space-between;
+    &-previous {
+        cursor: pointer;
+    }
+    &-next {
+        cursor: pointer;
+    }
+}

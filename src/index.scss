@@ -1,9 +1,15 @@
+@import "./assets/fonts/pokemonClassic.ttf";
+@font-face {
+    font-family: mainFont;
+    src: url("./assets/fonts/pokemonClassic.ttf");
+}
+
 body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     background-color: rgba(245, 245, 245, 0.562);
-    font-family: "Poppins", sans-serif;
+    font-family: mainFont;
 }
 
 textarea:focus,
@@ -12,7 +18,7 @@ input:focus {
 }
 
 input {
-    font-family: "Poppins", sans-serif;
+    font-family: mainFont;
     font-size: 20px;
     width: 100%;
 }
@@ -22,7 +28,7 @@ button {
     outline: none;
     border: none;
     background-color: transparent;
-    font-family: "Poppins", sans-serif;
+    font-family: mainFont;
 }
 
 code {

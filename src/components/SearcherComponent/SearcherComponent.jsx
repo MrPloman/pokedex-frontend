@@ -2,12 +2,27 @@ import React from "react";
 import {useForm} from "../../hooks/useForm";
 import "./SearcherComponent.scss";
 
-export const SearcherComponent = () => {
+export const SearcherComponent = (props) => {
+  const {searchByNumber, searchByName, clearList} = props;
   const initialForm = {
     idSearcher: "",
     nameSearcher: "",
   };
   const {formState, handleInputForm} = useForm(initialForm);
+  console.log(formState);
+  const search = () => {
+    if (formState.idSearcher !== "") {
+      searchByNumber(formState.idSearcher);
+    }
+    if (formState.nameSearcher !== "") {
+      searchByName(formState.nameSearcher);
+    }
+  };
+  const clearFilters = () => {
+    formState.nameSearcher = "";
+    formState.idSearcher = "";
+    clearList();
+  };
   return (
     <>
       <div className="searcher-content">
@@ -43,12 +58,25 @@ export const SearcherComponent = () => {
             onChange={handleInputForm}
           />
         </div>
+
         <div className="searcher-content-buttons">
           <div className="searcher-content-buttons-each">
-            <button>Show All</button>
+            <button
+              onClick={() => {
+                search();
+              }}
+            >
+              Search
+            </button>
           </div>
           <div className="searcher-content-buttons-each">
-            <button>Clear Filter</button>
+            <button
+              onClick={() => {
+                clearFilters();
+              }}
+            >
+              Clear Filter
+            </button>
           </div>
         </div>
       </div>
