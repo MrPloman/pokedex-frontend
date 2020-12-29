@@ -30,6 +30,10 @@ export const ListPage = () => {
   );
   useEffect(() => {
     setLoadingState(true);
+    clearList();
+  }, [page]);
+
+  const getPokemonList = () => {
     getAllPokemons(offset, limit).then((r) => {
       console.log(r);
 
@@ -43,9 +47,9 @@ export const ListPage = () => {
         getPokemonDetail(r.data.results);
       }
     });
-  }, []);
-
-  const getPokemonList = () => {};
+    /*     const clearAction = {type: "CLEAR_POKEMON_DETAIL", payload: []};
+    dispatchDetail(clearAction) */
+  };
 
   const getPokemonDetail = (data) => {
     data.forEach((p) => {
@@ -56,9 +60,8 @@ export const ListPage = () => {
             payload: r.data,
           };
           dispatchDetail(action);
-          setTimeout(() => {
-            setLoadingState(false);
-          }, 500);
+
+          setLoadingState(false);
         }
       });
     });
@@ -75,9 +78,8 @@ export const ListPage = () => {
         };
 
         dispatchDetail(action);
-        setTimeout(() => {
-          setLoadingState(false);
-        }, 500);
+
+        setLoadingState(false);
       }
     });
   };
@@ -92,9 +94,7 @@ export const ListPage = () => {
         };
         dispatchDetail(action);
 
-        setTimeout(() => {
-          setLoadingState(false);
-        }, 500);
+        setLoadingState(false);
       }
     });
   };
@@ -106,17 +106,7 @@ export const ListPage = () => {
       payload: [],
     };
     dispatchDetail(action);
-    getAllPokemons().then(({status, data}) => {
-      if (status === 200) {
-        const action = {
-          type: "GET_ALL_POKEMONS",
-          payload: data.results,
-        };
-
-        dispatchList(action);
-        getPokemonDetail(data.results);
-      }
-    });
+    getPokemonList();
   };
 
   return (
