@@ -5,22 +5,22 @@ import "./SearcherComponent.scss";
 export const SearcherComponent = (props) => {
   const {searchByNumber, searchByName, clearList} = props;
   const initialForm = {
-    idSearcher: "",
-    nameSearcher: "",
+    idSearcher: {value: "", validate: false},
+    nameSearcher: {value: "", validate: false},
   };
   const {formState, handleInputForm} = useForm(initialForm);
   console.log(formState);
   const search = () => {
-    if (formState.idSearcher !== "") {
-      searchByNumber(formState.idSearcher);
+    if (formState.idSearcher.value !== "") {
+      searchByNumber(formState.idSearcher.value);
     }
-    if (formState.nameSearcher !== "") {
-      searchByName(formState.nameSearcher);
+    if (formState.nameSearcher.value !== "") {
+      searchByName(formState.nameSearcher.value);
     }
   };
   const clearFilters = () => {
-    formState.nameSearcher = "";
-    formState.idSearcher = "";
+    formState.nameSearcher.value = "";
+    formState.idSearcher.value = "";
     clearList();
   };
   return (
@@ -36,7 +36,7 @@ export const SearcherComponent = (props) => {
           <input
             className="searcher-content-component-input"
             name="idSearcher"
-            value={formState.idSearcher}
+            value={formState.idSearcher.value}
             type="number"
             placeholder="Search by number..."
             onChange={handleInputForm}
@@ -52,7 +52,7 @@ export const SearcherComponent = (props) => {
           <input
             className="searcher-content-component-input"
             name="nameSearcher"
-            value={formState.nameSearcher}
+            value={formState.nameSearcher.value}
             type="text"
             placeholder="Search by name..."
             onChange={handleInputForm}

@@ -1,16 +1,8 @@
 import { useState } from "react";
 
-export const useForm = (initialForm = {}) => {
-    const [formState, setFormState] = useState(initialForm);
-    const handleInputForm = ({ target }) => {
-        setFormState({
-            ...formState,
-            [target.name]: {
-                value: target.value,
-                validate: formState[target.name].validate,
-            },
-        });
-    };
+export const useValidator = (initialForm = {}) => {
+    const [validatorState, setValidatorState] = useState(initialForm);
+
     const handleValidations = (validations) => {
         for (const key in validations) {
             switch (key) {
@@ -46,7 +38,7 @@ export const useForm = (initialForm = {}) => {
                     const repeatPasswordRegExp = new RegExp(
                         /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/
                     );
-                    validations[key] === validations["password"] ||
+                    validations[key] === validations["password"] &&
                         repeatPasswordRegExp.test(String(validations[key].value)) ?
                         (validations[key].validate = true) :
                         (validations[key].validate = false);
@@ -57,7 +49,9 @@ export const useForm = (initialForm = {}) => {
             }
         }
 
-        setFormState(validations);
+        setValidatorState(validations);
+        return validations;
     };
-    return { formState, handleInputForm, handleValidations };
+
+    return { validatorState, handleValidations };
 };

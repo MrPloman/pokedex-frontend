@@ -7,7 +7,7 @@ import "./LoginPage.scss";
 import {AuthLoaderComponent} from "../../components/AuthLoaderComponent/AuthLoaderComponent";
 
 export const LoginPage = () => {
-  const [introState, setIntroState] = useState(false);
+  const [introState, setIntroState] = useState(true);
   const [loadingState, setLoadingState] = useState(false);
   const intro = () => {
     setTimeout(() => {
