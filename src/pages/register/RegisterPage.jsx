@@ -1,30 +1,54 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {NavLink, useHistory} from "react-router-dom";
 import {PokedexApiRequests} from "../../helpers/PokedexApiRequests.helper";
 import {useForm} from "../../hooks/useForm";
 import "./RegisterPage.scss";
 
 export const RegisterPage = () => {
-  const {registerTrainer} = PokedexApiRequests();
-  const history = useHistory();
+  /*   const {registerTrainer} = PokedexApiRequests();
+  const history = useHistory(); */
+
   const initialForm = {
-    name: {value: "", validate: true},
-    surname: {value: "", validate: true},
-    email: {value: "", validate: true},
-    password: {value: "", validate: true},
-    repeatPassword: {value: "", validate: true},
+    name: {
+      value: "",
+      validate: {error: "", isValidated: false},
+    },
+    surname: {
+      value: "",
+      validate: {error: "", isValidated: false},
+    },
+    email: {
+      value: "",
+      validate: {error: "", isValidated: false},
+    },
+    password: {
+      value: "",
+      validate: {
+        error: "",
+        isValidated: false,
+      },
+    },
+    repeatPassword: {
+      value: "",
+      validate: {error: "", isValidated: false},
+    },
   };
+
   const {formState, handleInputForm, handleValidations} = useForm(initialForm);
 
+  useEffect(() => {
+    handleValidations();
+    console.log(formState.email.validate.isValidated);
+  });
+
   const validateForm = () => {
-    handleValidations(formState);
-    console.log(formState);
+    handleValidations();
     if (
-      formState.email.validate &&
-      formState.name.validate &&
-      formState.surname.validate &&
-      formState.password.validate &&
-      formState.repeatPassword.validate
+      formState.email.validate.isValidated &&
+      formState.name.validate.isValidated &&
+      formState.surname.validate.isValidated &&
+      formState.password.validate.isValidated &&
+      formState.repeatPassword.validate.isValidated
     ) {
       return true;
     } else {
@@ -32,8 +56,9 @@ export const RegisterPage = () => {
     }
   };
 
-  const register = () => {
-    handleValidations(formState);
+  const register = (event) => {
+    console.log(formState);
+    console.log(event);
     validateForm();
 
     /*     registerTrainer(formState)
@@ -45,15 +70,6 @@ export const RegisterPage = () => {
         console.log(err);
       }); */
   };
-  useEffect(
-    (e) => {
-      console.log(e);
-
-      handleValidations(formState);
-      console.log(formState);
-    },
-    [useForm]
-  );
 
   return (
     <>
@@ -72,18 +88,16 @@ export const RegisterPage = () => {
                   <div className="register-content-center-box-center-form-row-field">
                     <label>Email</label>
                     <input
+                      validate={formState.email.validate.error}
                       type="text"
                       name="email"
                       value={formState.email.value}
                       placeholder="Introduce an email..."
                       onChange={handleInputForm}
                     />
-                    {formState.email.validate === false &&
-                      console.log(formState.email.validate) && (
-                        <div>
-                          <div>NO ENTRA</div>
-                        </div>
-                      )}
+                    <div>
+                      <p>{formState.email.validate.error}</p>
+                    </div>
                   </div>
                 </div>
                 <div className="register-content-center-box-center-form-row">
@@ -155,9 +169,7 @@ export const RegisterPage = () => {
                 </div>
                 <button
                   className="register-content-center-box-center-form-button"
-                  onClick={() => {
-                    validateForm();
-                  }}
+                  onClick={register}
                 >
                   Register Now!
                 </button>
