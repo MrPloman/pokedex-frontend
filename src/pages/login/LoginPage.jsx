@@ -13,7 +13,7 @@ export const LoginPage = () => {
     setTimeout(() => {
       setIntroState(false);
       localStorage.setItem("introAlreadySeen", true);
-    }, 16000);
+    }, 17000);
   };
 
   useEffect(() => {
@@ -32,7 +32,9 @@ export const LoginPage = () => {
   return (
     <>
       {introState ? (
-        <BackgroundComponent></BackgroundComponent>
+        <div className="animate__animated animate__fadeIn">
+          <BackgroundComponent></BackgroundComponent>
+        </div>
       ) : (
         <div className="login-content">
           <div className="login-content-top">
@@ -40,7 +42,7 @@ export const LoginPage = () => {
              */}
           </div>
           {!loadingState ? (
-            <div className="login-content-center">
+            <div className="login-content-center animate__animated animate__fadeIn">
               <h1>Welcome to Pokedex App!</h1>
               <div className="login-content-center-box">
                 <div className="login-content-center-box-top">
@@ -92,7 +94,7 @@ export const LoginPage = () => {
               </div>
             </div>
           ) : (
-            <div>
+            <div className="animate__animated animate__fadeIn">
               <AuthLoaderComponent></AuthLoaderComponent>
             </div>
           )}

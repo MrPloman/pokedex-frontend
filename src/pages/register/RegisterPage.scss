@@ -18,6 +18,7 @@
             align-items: center;
             border: black 3px dotted;
             min-height: 35vh;
+            max-width: 40vw;
             &-top {
                 h3 {
                     padding: 20px 0 20px 0;
@@ -32,7 +33,7 @@
                         flex-direction: row;
                         justify-content: center;
                         &-field {
-                            margin-left: 20px;
+                            padding: 10px 20px 10px 20px;
                             width: 100%;
                             input {
                                 font-family: secondaryFont;
@@ -46,6 +47,7 @@
                         display: flex;
                         flex-direction: row;
                         justify-content: space-between;
+                        font-size: 12px;
                         &-each {
                             width: 40%;
                             text-align: left;
@@ -55,7 +57,15 @@
                             }
                         }
                     }
-                    &-button {}
+                    &-button {
+                        margin: 0 auto;
+                        justify-content: center;
+                        border: none;
+                        width: 200px;
+                        height: 50px;
+                        border: 1px solid black;
+                        border-radius: 20px;
+                    }
                 }
             }
         }
@@ -63,7 +73,7 @@
 }
 
 h6 {
-    font-size: 9px;
+    font-size: 12px;
 }
 
 span {
@@ -71,9 +81,53 @@ span {
     color: rgb(189, 0, 0);
     cursor: pointer;
     margin-left: 5px;
+    font-size: 12px;
+}
+
+.input-error {
+    color: rgb(214, 0, 0);
+    font-size: 11px;
+    font-weight: bolder;
 }
 
 .navlink {
     color: rgb(146, 0, 0);
     text-decoration: none;
 }
+
+.animate__animated.animate__fadeIn {
+    --animate-duration: 1s;
+}
+
+@media (max-width: 1600px) {
+    .register-content {
+        &-center {
+            &-box {
+                max-width: 80vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .register-content {
+        &-center {
+            &-box {
+                margin: 0 auto;
+                max-width: 90vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .register-content {
+        &-center {
+            &-box {
+                max-width: 90vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {}

@@ -70,3 +70,7 @@ span {
     color: rgb(146, 0, 0);
     text-decoration: none;
 }
+
+.animate__animated.animate__fadeIn {
+    --animate-duration: 1s;
+}
