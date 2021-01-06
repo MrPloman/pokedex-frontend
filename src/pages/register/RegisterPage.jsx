@@ -5,13 +5,25 @@ import {useForm} from "react-hook-form";
 import "./RegisterPage.scss";
 import {PATTERNS} from "../../config/environment/patterns";
 import {AuthLoaderComponent} from "../../components/AuthLoaderComponent/AuthLoaderComponent";
+import {ModalComponent} from "../../components/ModalComponent/ModalComponent";
+import {NavbarAuthComponent} from "../../components/NavbarAuthComponent/NavbarAuthComponent";
 
 export const RegisterPage = () => {
   const {registerTrainer} = PokedexApiRequests();
   const {register, handleSubmit, watch, errors} = useForm({});
   const [loadingState, setLoadingState] = useState(false);
+  const [modalState, setModalState] = useState(false);
   const password = useRef({});
   const history = useHistory();
+  const goToLogin = () => {
+    history.push("/login");
+  };
+  const configModal = {
+    title: "Registered Succesfully!",
+    message:
+      "You've been registered succesfully. We've sent a verification-email to your email, check your inbox and activate your account to login.",
+    actions: [{label: "Go To Login!", action: goToLogin}],
+  };
 
   password.current = watch("password", "");
   const onSubmit = (data) => {
@@ -19,10 +31,10 @@ export const RegisterPage = () => {
     registerTrainer(data)
       .then(({data, status}) => {
         if (status === 200) {
-          setTimeout(() => {
-            setLoadingState(false);
-            history.push("/login");
-          }, 1000);
+          setLoadingState(false);
+          if (loadingState === false) {
+            setModalState(true);
+          }
         } else if (status === 400) {
           setLoadingState(false);
           console.log(data, status);
@@ -35,11 +47,14 @@ export const RegisterPage = () => {
 
   return (
     <>
-      <div className="register-content animate__animated animate__fadeIn">
-        <div className="register-content-top"></div>
-        {!loadingState ? (
-          <div className="register-content-center">
-            <h1>Don't you have an account?</h1>
+      <div className="register-content">
+        <div className="register-content-navbar">
+          <NavbarAuthComponent></NavbarAuthComponent>
+        </div>
+
+        <div className="register-content-center animate__animated animate__fadeIn">
+          <h1>Don't you have an account?</h1>
+          {!loadingState ? (
             <div className="register-content-center-box">
               <div className="register-content-center-box-top">
                 <h3>Register</h3>
@@ -152,8 +167,8 @@ export const RegisterPage = () => {
                       <h6>
                         Don't you remember who are you?
                         <span>
-                          <NavLink className="navlink" exact to="/register">
-                            Reset your password!
+                          <NavLink className="navlink" exact to="/recovery">
+                            Recovery your password!
                           </NavLink>
                         </span>
                       </h6>
@@ -179,12 +194,14 @@ export const RegisterPage = () => {
                 </form>
               </div>
             </div>
-          </div>
-        ) : (
-          <div className="animate__animated animate__fadeIn">
-            <AuthLoaderComponent></AuthLoaderComponent>
-          </div>
-        )}
+          ) : (
+            <div className="animate__animated animate__fadeIn">
+              <AuthLoaderComponent></AuthLoaderComponent>
+            </div>
+          )}
+        </div>
+
+        {modalState && <ModalComponent config={configModal}></ModalComponent>}
       </div>
     </>
   );

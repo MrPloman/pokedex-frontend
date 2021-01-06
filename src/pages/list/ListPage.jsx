@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useReducer} from "react";
 import {CardComponent} from "../../components/CardComponent/CardComponent";
 import {LoaderComponent} from "../../components/LoaderComponent/LoaderComponent";
-import {MainRouterComponent} from "../../components/MainRouterComponent/MainRouterComponent";
+import {NavbarMainComponent} from "../../components/NavbarMainComponent/NavbarMainComponent";
 import {PaginationComponent} from "../../components/PaginationComponent/PaginationComponent";
 import {SearcherComponent} from "../../components/SearcherComponent/SearcherComponent";
 import {PokeApiRequests} from "../../helpers/PokeApiRequests.helper";
@@ -47,8 +47,6 @@ export const ListPage = () => {
         getPokemonDetail(r.data.results);
       }
     });
-    /*     const clearAction = {type: "CLEAR_POKEMON_DETAIL", payload: []};
-    dispatchDetail(clearAction) */
   };
 
   const getPokemonDetail = (data) => {
@@ -112,7 +110,7 @@ export const ListPage = () => {
   return (
     <div className="content">
       <div className="content-navbar">
-        <MainRouterComponent></MainRouterComponent>
+        <NavbarMainComponent></NavbarMainComponent>
       </div>
 
       <div className="content-main">

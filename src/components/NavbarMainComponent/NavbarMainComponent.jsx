@@ -7,10 +7,10 @@ import {
   useParams,
   NavLink,
 } from "react-router-dom";
-import "./MainRouterComponent.scss";
+import "./NavbarMainComponent.scss";
 import pokeball from "../../assets/img/pokeball.svg";
 
-export const MainRouterComponent = () => {
+export const NavbarMainComponent = () => {
   return (
     <>
       <div className="navbar">

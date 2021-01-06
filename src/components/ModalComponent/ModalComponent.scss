@@ -1,0 +1,32 @@
+.modal {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    margin: 0 auto;
+    z-index: 100;
+    background-color: rgba(0, 0, 0, 0.301);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-box {
+        min-height: 35vh;
+        max-width: 40vw;
+        background-color: rgb(240, 240, 240);
+        border: rgb(126, 126, 126) 3px solid;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &-title {
+            h3 {
+                padding: 20px 0 20px 0;
+            }
+        }
+        &-description {
+            width: 80%;
+            padding-bottom: 40px;
+            text-align: center;
+        }
+    }
+}

@@ -1,19 +1,44 @@
-import React, {useState, useEffect} from "react";
-import {NavLink} from "react-router-dom";
+import React, {useState, useEffect, useReducer} from "react";
+import {NavLink, useHistory} from "react-router-dom";
 import {BackgroundComponent} from "../../components/BackgroundComponent/BackgroundComponent";
-import {MainRouterComponent} from "../../components/MainRouterComponent/MainRouterComponent";
 import "./LoginPage.scss";
+import {useForm} from "react-hook-form";
+import {PATTERNS} from "../../config/environment/patterns";
 
 import {AuthLoaderComponent} from "../../components/AuthLoaderComponent/AuthLoaderComponent";
+import {PokedexApiRequests} from "../../helpers/PokedexApiRequests.helper";
+import {authReducer} from "../../reducers/authReducer";
+import {NavbarAuthComponent} from "../../components/NavbarAuthComponent/NavbarAuthComponent";
 
 export const LoginPage = () => {
+  const [tokenState, dispatchToken] = useReducer(authReducer, {});
+  const {register, handleSubmit, errors} = useForm({});
+  const {loginTrainer} = PokedexApiRequests();
   const [introState, setIntroState] = useState(true);
   const [loadingState, setLoadingState] = useState(false);
+  const history = useHistory();
   const intro = () => {
     setTimeout(() => {
       setIntroState(false);
       localStorage.setItem("introAlreadySeen", true);
     }, 17000);
+  };
+
+  const onSubmit = (d) => {
+    loginTrainer(d)
+      .then(({data}) => {
+        console.log(data);
+        if (data.result.status === 200) {
+          const action = {
+            type: "SET_TOKEN",
+            payload: {token: data.result.data.token},
+          };
+          dispatchToken(action);
+          history.push("/list");
+        }
+      })
+      .catch((e) => {});
+    /* setLoadingState(true); */
   };
 
   useEffect(() => {
@@ -25,10 +50,6 @@ export const LoginPage = () => {
     }
   }, []);
 
-  const login = () => {
-    setLoadingState(true);
-  };
-
   return (
     <>
       {introState ? (
@@ -37,9 +58,8 @@ export const LoginPage = () => {
         </div>
       ) : (
         <div className="login-content">
-          <div className="login-content-top">
-            {/*             <MainRouterComponent></MainRouterComponent>
-             */}
+          <div className="login-content-navbar">
+            <NavbarAuthComponent></NavbarAuthComponent>
           </div>
           {!loadingState ? (
             <div className="login-content-center animate__animated animate__fadeIn">
@@ -49,23 +69,53 @@ export const LoginPage = () => {
                   <h3>Login</h3>
                 </div>
                 <div className="login-content-center-box-center">
-                  <form className="login-content-center-box-center-form">
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="login-content-center-box-center-form"
+                  >
                     <div className="login-content-center-box-center-form-field">
                       <label>Email</label>
-                      <input type="text" />
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder="Introduce an email..."
+                        ref={register({
+                          required: true,
+                          pattern: PATTERNS.email,
+                        })}
+                      />
+                      {errors.email && (
+                        <p className="input-error">
+                          You must introduce a valid email
+                        </p>
+                      )}
                     </div>
 
                     <div className="login-content-center-box-center-form-field">
                       <label>Password</label>
-                      <input type="password" />
+                      <input
+                        type="password"
+                        name="password"
+                        placeholder="Introduce a valid password"
+                        ref={register({
+                          required: true,
+                          pattern: PATTERNS.password,
+                        })}
+                      />
+                      {errors.password && (
+                        <p className="input-error">
+                          You must introduce a password with 8 characters,
+                          lowercase and uppercase letters and numbers.
+                        </p>
+                      )}
                     </div>
                     <div className="login-content-center-box-center-form-questions">
                       <div className="login-content-center-box-center-form-questions-each">
                         <h6>
                           Don't you remember who are you?
                           <span>
-                            <NavLink className="navlink" exact to="/register">
-                              Reset your password!
+                            <NavLink className="navlink" exact to="/recovery">
+                              Recovery your password!
                             </NavLink>
                           </span>
                         </h6>
@@ -83,9 +133,7 @@ export const LoginPage = () => {
                     </div>
                     <button
                       className="login-content-center-box-center-form-button"
-                      onClick={() => {
-                        login();
-                      }}
+                      type="submit"
                     >
                       Login
                     </button>

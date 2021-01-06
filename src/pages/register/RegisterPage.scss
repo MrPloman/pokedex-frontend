@@ -3,9 +3,12 @@
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
+    &-navbar {
+        top: 0;
+    }
     &-center {
+        margin-top: 7%;
         h1 {
             padding: 20px 0 20px 0;
             margin-bottom: 50px;

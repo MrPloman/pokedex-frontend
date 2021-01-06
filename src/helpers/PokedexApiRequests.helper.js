@@ -5,13 +5,17 @@ export const PokedexApiRequests = () => {
     const http = axios;
     const { API_URL } = ENDPOINTS;
     const registerTrainer = async(data) => {
-        return http.post(`${API_URL}register`, data);
+        return http.post(`${API_URL}trainer/register`, data);
     };
     const loginTrainer = async(data) => {
-        return http.post(`${API_URL}login`);
+        console.log(data);
+        return http.post(`${API_URL}trainer/login`, data);
     };
-    const authTrainer = async(data) => {
-        return http.get(`${API_URL}auth`);
+    const verifyAccount = async(id) => {
+        return http.get(`${API_URL}trainer/verify/${id}`);
     };
-    return { registerTrainer, loginTrainer, authTrainer };
+    const me = async(data) => {
+        return http.get(`${API_URL}trainer/me`);
+    };
+    return { registerTrainer, loginTrainer, me, verifyAccount };
 };

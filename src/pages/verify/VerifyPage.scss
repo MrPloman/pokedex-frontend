@@ -1,0 +1,106 @@
+.verify-content {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    &-center {
+        h1 {
+            padding: 20px 0 20px 0;
+            margin-bottom: 50px;
+            text-align: center;
+        }
+        &-box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: black 3px dotted;
+            min-height: 35vh;
+            max-width: 40vw;
+            &-top {
+                h3 {
+                    font-weight: bolder;
+                }
+            }
+            &-center {
+                width: 80%;
+                padding-bottom: 40px;
+                p {
+                    padding: 20px 0 20px 0;
+                    text-align: center;
+                }
+            }
+            &-bottom {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                button {}
+            }
+        }
+        &-loader {
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+h6 {
+    font-size: 12px;
+}
+
+span {
+    font-weight: bolder;
+    color: rgb(189, 0, 0);
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 12px;
+}
+
+.input-error {
+    color: rgb(214, 0, 0);
+    font-size: 11px;
+    font-weight: bolder;
+}
+
+.navlink {
+    text-decoration: none;
+}
+
+.animate__animated.animate__fadeIn {
+    --animate-duration: 1s;
+}
+
+@media (max-width: 1600px) {
+    .verify-content {
+        &-center {
+            &-box {
+                max-width: 80vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 1024px) {
+    .verify-content {
+        &-center {
+            &-box {
+                margin: 0 auto;
+                max-width: 90vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .verify-content {
+        &-center {
+            &-box {
+                max-width: 90vw;
+            }
+        }
+    }
+}
+
+@media (max-width: 480px) {}

@@ -1,0 +1,58 @@
+.navbarAuth {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.048);
+    border-bottom: 5px dashed rgb(32, 32, 32);
+    justify-content: space-between;
+    align-items: center;
+    &-left {
+        display: flex;
+        flex-direction: row;
+        &-element {
+            margin: 0 20px 0 20px;
+            &-link {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: black;
+                justify-content: center;
+                text-align: center;
+                padding: 2px 7px 5px 7px;
+                border-radius: 10px;
+                border: 4px black solid;
+            }
+        }
+    }
+    &-center {
+        color: black;
+        background-color: rgb(255, 255, 255);
+        border-radius: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+            width: 50px;
+            height: 50px;
+        }
+    }
+    &-right {
+        display: flex;
+        flex-direction: row;
+        &-element {
+            margin: 0 20px 0 0;
+            &-link {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: black;
+                justify-content: center;
+                text-align: center;
+                padding: 2px 7px 5px 7px;
+                border-radius: 10px;
+                border: 4px black solid;
+            }
+        }
+    }
+}
