@@ -15,6 +15,7 @@ export const ModalComponent = ({config}) => {
           <div className="modal-box-actions">
             {config.actions.map((a) => (
               <button
+                key={a.label}
                 onClick={() => {
                   a.action();
                 }}

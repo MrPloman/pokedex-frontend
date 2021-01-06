@@ -6,8 +6,11 @@ import {useForm} from "react-hook-form";
 import {PATTERNS} from "../../config/environment/patterns";
 import {AuthLoaderComponent} from "../../components/AuthLoaderComponent/AuthLoaderComponent";
 import {ModalComponent} from "../../components/ModalComponent/ModalComponent";
+import "./RecoveryPasswordPage.scss";
+import {PokedexApiRequests} from "../../helpers/PokedexApiRequests.helper";
 
 export const RecoveryPasswordPage = () => {
+  const {recoveryPassword} = PokedexApiRequests();
   const [modalState, setModalState] = useState(false);
   const [loadingState, setLoadingState] = useState(false);
   const history = useHistory();
@@ -22,29 +25,44 @@ export const RecoveryPasswordPage = () => {
     actions: [{label: "Go To Login!", action: goToLogin}],
   };
   const {register, handleSubmit, watch, errors} = useForm({});
-  const onSubmit = (data) => {};
+  const onSubmit = (d) => {
+    recoveryPassword(d)
+      .then(({data}) => {
+        if (data.result.status === 200) {
+          setLoadingState(false);
+          if (loadingState === false) {
+            setModalState(true);
+          }
+        } else if (data.result.status === 400) {
+          setLoadingState(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <>
-      <div className="register-content">
-        <div className="register-content-navbar">
+      <div className="recovery-content">
+        <div className="recovery-content-navbar">
           <NavbarAuthComponent></NavbarAuthComponent>
         </div>
 
-        <div className="register-content-center animate__animated animate__fadeIn">
+        <div className="recovery-content-center animate__animated animate__fadeIn">
           <h1>Don't you remember your password?</h1>
           {!loadingState ? (
-            <div className="register-content-center-box">
-              <div className="register-content-center-box-top">
+            <div className="recovery-content-center-box">
+              <div className="recovery-content-center-box-top">
                 <h3>Password Recovery</h3>
               </div>
-              <div className="register-content-center-box-center">
+              <div className="recovery-content-center-box-center">
                 <form
-                  className="register-content-center-box-center-form"
+                  className="recovery-content-center-box-center-form"
                   onSubmit={handleSubmit(onSubmit)}
                 >
-                  <div className="register-content-center-box-center-form-row">
-                    <div className="register-content-center-box-center-form-row-field">
+                  <div className="recovery-content-center-box-center-form-row">
+                    <div className="recovery-content-center-box-center-form-row-field">
                       <label>Email</label>
                       <input
                         type="text"
@@ -63,8 +81,8 @@ export const RecoveryPasswordPage = () => {
                     </div>
                   </div>
 
-                  <div className="register-content-center-box-center-form-questions">
-                    <div className="register-content-center-box-center-form-questions-each">
+                  <div className="recovery-content-center-box-center-form-questions">
+                    <div className="recovery-content-center-box-center-form-questions-each">
                       <h6>
                         Do you want to login?
                         <span>
@@ -74,7 +92,7 @@ export const RecoveryPasswordPage = () => {
                         </span>
                       </h6>
                     </div>
-                    <div className="register-content-center-box-center-form-questions-each-right">
+                    <div className="recovery-content-center-box-center-form-questions-each-right">
                       <h6>
                         Don't you have an account?
                         <span>
@@ -85,12 +103,13 @@ export const RecoveryPasswordPage = () => {
                       </h6>
                     </div>
                   </div>
-                  <div className="register-content-center-box-center-form-row">
-                    <input
-                      className="register-content-center-box-center-form-button"
+                  <div className="recovery-content-center-box-center-form-row">
+                    <button
+                      className="recovery-content-center-box-center-form-button"
                       type="submit"
-                      value="Recovery your password!"
-                    />
+                    >
+                      Recovery
+                    </button>
                   </div>
                 </form>
               </div>

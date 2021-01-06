@@ -14,8 +14,11 @@ export const PokedexApiRequests = () => {
     const verifyAccount = async(id) => {
         return http.get(`${API_URL}trainer/verify/${id}`);
     };
+    const recoveryPassword = async(data) => {
+        return http.post(`${API_URL}trainer/recovery`, data);
+    };
     const me = async(data) => {
         return http.get(`${API_URL}trainer/me`);
     };
-    return { registerTrainer, loginTrainer, me, verifyAccount };
+    return { registerTrainer, loginTrainer, me, verifyAccount, recoveryPassword };
 };

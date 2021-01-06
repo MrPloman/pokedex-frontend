@@ -27,7 +27,6 @@ export const LoginPage = () => {
   const onSubmit = (d) => {
     loginTrainer(d)
       .then(({data}) => {
-        console.log(data);
         if (data.result.status === 200) {
           const action = {
             type: "SET_TOKEN",

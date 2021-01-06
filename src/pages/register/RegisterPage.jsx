@@ -185,11 +185,12 @@ export const RegisterPage = () => {
                     </div>
                   </div>
                   <div className="register-content-center-box-center-form-row">
-                    <input
+                    <button
                       className="register-content-center-box-center-form-button"
                       type="submit"
-                      value="Register!"
-                    />
+                    >
+                      Register
+                    </button>
                   </div>
                 </form>
               </div>
