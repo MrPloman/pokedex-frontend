@@ -5,6 +5,7 @@ import {LoginPage} from "../../pages/login/LoginPage";
 import {RegisterPage} from "../../pages/register/RegisterPage";
 import {VerifyPage} from "../../pages/verify/VerifyPage";
 import {RecoveryPasswordPage} from "../../pages/recovery/RecoveryPasswordPage";
+import {ResetPasswordPage} from "../../pages/reset/ResetPasswordPage";
 
 export const RouterMainComponent = () => {
   return (
@@ -14,7 +15,6 @@ export const RouterMainComponent = () => {
           <Route path="/list">
             <ListPage></ListPage>
           </Route>
-
           <Route path="/login">
             <LoginPage></LoginPage>
           </Route>
@@ -26,6 +26,9 @@ export const RouterMainComponent = () => {
           </Route>
           <Route path="/verify/:id">
             <VerifyPage></VerifyPage>
+          </Route>
+          <Route path="/reset/:id">
+            <ResetPasswordPage></ResetPasswordPage>
           </Route>
           <Route path="/">
             <LoginPage></LoginPage>

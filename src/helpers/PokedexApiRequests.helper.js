@@ -17,8 +17,18 @@ export const PokedexApiRequests = () => {
     const recoveryPassword = async(data) => {
         return http.post(`${API_URL}trainer/recovery`, data);
     };
+    const resetPassword = async(data) => {
+        return http.post(`${API_URL}trainer/reset/:id`, data);
+    };
     const me = async(data) => {
         return http.get(`${API_URL}trainer/me`);
     };
-    return { registerTrainer, loginTrainer, me, verifyAccount, recoveryPassword };
+    return {
+        registerTrainer,
+        loginTrainer,
+        me,
+        verifyAccount,
+        recoveryPassword,
+        resetPassword,
+    };
 };
