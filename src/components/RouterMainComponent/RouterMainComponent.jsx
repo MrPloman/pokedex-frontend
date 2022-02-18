@@ -6,6 +6,7 @@ import {RegisterPage} from "../../pages/register/RegisterPage";
 import {VerifyPage} from "../../pages/verify/VerifyPage";
 import {RecoveryPasswordPage} from "../../pages/recovery/RecoveryPasswordPage";
 import {ResetPasswordPage} from "../../pages/reset/ResetPasswordPage";
+import {DetailPage} from "../../pages/detail/DetailPage";
 
 export const RouterMainComponent = () => {
   return (
@@ -14,6 +15,9 @@ export const RouterMainComponent = () => {
         <Switch>
           <Route path="/list">
             <ListPage></ListPage>
+          </Route>
+          <Route path="/detail/:id">
+            <DetailPage></DetailPage>
           </Route>
           <Route path="/login">
             <LoginPage></LoginPage>

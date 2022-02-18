@@ -1,4 +1,14 @@
 .card {
+    transition: transform 1.5s ease-in-out;
+    -webkit-animation: fadein 2s;
+    /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 2s;
+    /* Firefox < 16 */
+    -ms-animation: fadein 2s;
+    /* Internet Explorer */
+    -o-animation: fadein 2s;
+    /* Opera < 12.1 */
+    animation: fadein 2s;
     cursor: pointer;
     width: 180px;
     height: 180px;
@@ -22,6 +32,7 @@
             color: rgb(255, 255, 255);
             text-shadow: 2px 2px #000000;
             font-size: 15px;
+            text-align: center;
         }
     }
     &-middle {
@@ -64,57 +75,38 @@
 }
 
 .card:hover {
-    transition: 1s;
-    -webkit-animation-name: spin;
-    -webkit-animation-duration: 2000ms;
-    -webkit-animation-iteration-count: infinite;
-    -webkit-animation-timing-function: ease-in-out;
-    -moz-animation-name: spin;
-    -moz-animation-duration: 2000ms;
-    -moz-animation-iteration-count: infinite;
-    -moz-animation-timing-function: ease-in-out;
-    -ms-animation-name: spin;
-    -ms-animation-duration: 2000ms;
-    -ms-animation-iteration-count: infinite;
-    -ms-animation-timing-function: ease-in-out;
-    animation-name: spin;
-    animation-duration: 2000ms;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
+    transform: rotate(360deg);
 }
 
-@-ms-keyframes spin {
+@keyframes fadein {
     from {
-        -ms-transform: rotate(0deg);
+        opacity: 0;
     }
     to {
-        -ms-transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
-@-moz-keyframes spin {
+
+/* Firefox < 16 */
+
+@-moz-keyframes fadein {
     from {
-        -moz-transform: rotate(0deg);
+        opacity: 0;
     }
     to {
-        -moz-transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
-@-webkit-keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-    }
-}
 
-@keyframes spin {
+/* Safari, Chrome and Opera > 12.1 */
+
+@-webkit-keyframes fadein {
     from {
-        transform: rotate(0deg);
+        opacity: 0;
     }
     to {
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }

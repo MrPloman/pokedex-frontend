@@ -37,11 +37,10 @@ export const RegisterPage = () => {
           }
         } else if (status === 400) {
           setLoadingState(false);
-          console.log(data, status);
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
       });
   };
 

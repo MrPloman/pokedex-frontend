@@ -11,11 +11,8 @@ import {pokemonListReducer} from "../../reducers/pokemonListReducer";
 import "./ListPage.scss";
 
 export const ListPage = () => {
-  const {
-    getAllPokemons,
-    getPokemonByName,
-    getPokemonByNumber,
-  } = PokeApiRequests();
+  const {getAllPokemons, getPokemonByName, getPokemonByNumber} =
+    PokeApiRequests();
   const [paginationState, setPaginationState] = useState({
     offset: 0,
     limit: 12,
@@ -35,9 +32,7 @@ export const ListPage = () => {
 
   const getPokemonList = () => {
     getAllPokemons(offset, limit).then((r) => {
-      console.log(r);
-
-      if (r.status === 200) {
+      if (r && r.status === 200) {
         const action = {
           type: "GET_ALL_POKEMONS",
           payload: r.data.results,
@@ -52,13 +47,12 @@ export const ListPage = () => {
   const getPokemonDetail = (data) => {
     data.forEach((p) => {
       getPokemonByName(p.name).then((r) => {
-        if (r.status === 200) {
+        if (r && r.status === 200) {
           const action = {
             type: "UPDATE_POKEMON_DETAIL",
             payload: r.data,
           };
           dispatchDetail(action);
-
           setLoadingState(false);
         }
       });
@@ -68,15 +62,12 @@ export const ListPage = () => {
   const searchByName = (name) => {
     setLoadingState(true);
     getPokemonByName(name).then(({status, data}) => {
-      console.log(data);
       if (status === 200) {
         const action = {
           type: "GET_NAME_POKEMON_DETAIL",
           payload: data,
         };
-
         dispatchDetail(action);
-
         setLoadingState(false);
       }
     });
@@ -84,17 +75,29 @@ export const ListPage = () => {
 
   const searchByNumber = (number) => {
     setLoadingState(true);
-    getPokemonByNumber(number).then(({status, data}) => {
-      if (status === 200) {
-        const action = {
-          type: "GET_NUMBER_POKEMON_DETAIL",
-          payload: data,
-        };
-        dispatchDetail(action);
-
-        setLoadingState(false);
-      }
-    });
+    getPokemonByNumber(number)
+      .then(({status, data}) => {
+        if (status === 200) {
+          const action = {
+            type: "GET_NUMBER_POKEMON_DETAIL",
+            payload: data,
+          };
+          dispatchDetail(action);
+          setLoadingState(false);
+        } else {
+          const action = {
+            type: "GET_NUMBER_POKEMON_DETAIL",
+            payload: [],
+          };
+          dispatchDetail(action);
+          setLoadingState(false);
+        }
+      })
+      .catch((error) => {
+        if (error) {
+          setLoadingState(false);
+        }
+      });
   };
 
   const clearList = () => {
@@ -112,7 +115,6 @@ export const ListPage = () => {
       <div className="content-navbar">
         <NavbarMainComponent></NavbarMainComponent>
       </div>
-
       <div className="content-main">
         <div className="content-main-title">
           <h1>PokeDex</h1>
@@ -125,22 +127,23 @@ export const ListPage = () => {
           ></SearcherComponent>
         </div>
         {loadingState ? (
-          <LoaderComponent></LoaderComponent>
+          <div className="content-main-results">
+            <LoaderComponent></LoaderComponent>
+          </div>
         ) : (
           <div className="content-main-results">
             {pokemonDetailState.map((e) => {
-              return <CardComponent pokemon={e} key={e.id}></CardComponent>;
+              if (e) {
+                return <CardComponent pokemon={e} key={e.id}></CardComponent>;
+              }
             })}
           </div>
         )}
-
         <div className="content-main-pagination">
-          {!loadingState && (
-            <PaginationComponent
-              paginationState={paginationState}
-              setPaginationState={setPaginationState}
-            ></PaginationComponent>
-          )}
+          <PaginationComponent
+            paginationState={paginationState}
+            setPaginationState={setPaginationState}
+          ></PaginationComponent>
         </div>
       </div>
     </div>

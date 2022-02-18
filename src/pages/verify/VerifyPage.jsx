@@ -18,12 +18,11 @@ export const VerifyPage = () => {
     if (id) {
       verifyAccount(id)
         .then(({data}) => {
-          console.log(data);
           setLoadingState(false);
           setVerifiedState(data);
         })
         .catch((e) => {
-          console.log(e);
+          console.error(e);
           setLoadingState(false);
           setVerifiedState(e);
         });

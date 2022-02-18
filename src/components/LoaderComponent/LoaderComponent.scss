@@ -1,8 +1,7 @@
 .container {
-    width: 100%;
-    height: 100%;
-    z-index: 100;
     position: absolute;
+    width: 10px;
+    z-index: 100;
 }
 
 .redcirc {
@@ -57,7 +56,16 @@
     left: 0;
 }
 
-.container {
+.redcirc {
+    animation-name: increase;
+    animation-duration: 1s;
+    animation-timing-function: ease-in;
+    animation-delay: 0s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.whitecirc {
     animation-name: increase;
     animation-duration: 1s;
     animation-timing-function: ease-in;
@@ -68,9 +76,9 @@
 
 @keyframes increase {
     from {
-        transform: scale(0.5);
+        transform: scale(0.7);
     }
     to {
-        transform: (0.9);
+        transform: (0.7);
     }
 }

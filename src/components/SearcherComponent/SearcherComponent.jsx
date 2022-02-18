@@ -9,7 +9,7 @@ export const SearcherComponent = (props) => {
     nameSearcher: {value: "", validate: false},
   };
   const {formState, handleInputForm} = useForm(initialForm);
-  console.log(formState);
+
   const search = () => {
     if (formState.idSearcher.value !== "") {
       searchByNumber(formState.idSearcher.value);

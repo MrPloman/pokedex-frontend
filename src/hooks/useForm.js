@@ -56,7 +56,6 @@ export const useForm = (initialForm = {}) => {
         }
     };
     const handleInputForm = ({ target }) => {
-        console.log(target);
         setFormState({
             ...formState,
             [target.name]: {

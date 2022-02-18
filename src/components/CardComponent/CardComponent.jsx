@@ -21,12 +21,18 @@ export const CardComponent = (props) => {
       <div className="card-middle">
         <div className="card-middle-stroke">
           <div className="card-middle-stroke-img">
-            <img src={currentPokemon.sprites.front_default} alt="pokemon" />
+            {currentPokemon.sprites.front_default ? (
+              <img src={currentPokemon.sprites.front_default} alt="pokemon" />
+            ) : (
+              "?"
+            )}
           </div>
         </div>
       </div>
       <div className="card-bottom">
-        <h4 className="card-bottom-title">{currentPokemon.name}</h4>
+        <h4 className="card-bottom-title">
+          {currentPokemon.name.toUpperCase()}
+        </h4>
       </div>
     </div>
   ) : null;

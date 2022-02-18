@@ -8,7 +8,6 @@ export const PokeApiRequests = () => {
         return http.get(`${POKEAPI_URL}?offset=${offset}&limit=${limit}`);
     };
     const getPokemonByNumber = async(value) => {
-        console.log(value);
         return http.get(`${POKEAPI_URL}${value}`);
     };
     const getPokemonByName = async(value) => {

@@ -8,7 +8,6 @@ export const PokedexApiRequests = () => {
         return http.post(`${API_URL}trainer/register`, data);
     };
     const loginTrainer = async(data) => {
-        console.log(data);
         return http.post(`${API_URL}trainer/login`, data);
     };
     const verifyAccount = async(id) => {

@@ -4,14 +4,12 @@ import "./LoaderComponent.scss";
 export const LoaderComponent = () => {
   return (
     <>
-      <div className="container">
-        <div className="redcirc">
-          <div className="clic">
-            <div className="cli2"></div>
-          </div>
+      <div className="redcirc">
+        <div className="clic">
+          <div className="cli2"></div>
         </div>
-        <div className="whitecirc"></div>
       </div>
+      <div className="whitecirc"></div>
     </>
   );
 };
